@@ -9,13 +9,22 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
   const [ principalInput, setPrincipalInput] = useState("");
   const [ interestInput, setInterestInput ] = useState("3.5");
   const [ durationInput, setDurationInput ] = useState("");
+  const [ payment, setPayment] = useState("1");
   const [ displayFormError, setDisplayFormError ] = useState(false);
   const [ userQuotes, setUserQuotes ] = useState([])
 
   useEffect(() => {
-    setUserQuotes(quotes)
+    setUserQuotes(quotes);
+    calculateMonthly(quotes)
   }, [quotes]);
 
+  function calculateMonthly(currentQuote){
+    let c = currentQuote.interestInput/100/12;
+    let n = 12*currentQuote.durationInput;
+    let p = currentQuote.principalInput;
+    setPayment((p * (c* Math.pow((1+c), n)) / (Math.pow((1+c), n)-1)).toFixed(2))
+    console.log("calculating monthly");
+  }
   function handleFormSubmit() {
     setDisplayFormError(false);
     if(principalInput && interestInput && durationInput ){
@@ -26,7 +35,7 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
       }
       dispatch(inputActions.submitUserInputs(formValues));
       setPrincipalInput("");
-      setInterestInput("");
+      setInterestInput("3.5");
       setDurationInput("");
     } else {
       setDisplayFormError(true);
@@ -80,15 +89,12 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
                      <th>Number of Years</th>
                      <th>Monthly Payment</th>
                    </tr>
-                   { userQuotes.map((currentQuote) => {
-                     return(
-                       <tr>
-                         <td>{currentQuote.principalInput}</td>
-                         <td>{currentQuote.interestInput}</td>
-                         <td>{currentQuote.durationInput}</td>
-                       </tr>
-                     );
-                   })}
+                   <tr>
+                    <td>{quotes.principalInput}</td>
+                    <td>{quotes.interestInput}</td>
+                    <td>{quotes.durationInput}</td>
+                    <td>{payment}</td>
+                   </tr>
                  </table>
               </div>
               ) : (
