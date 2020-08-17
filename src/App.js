@@ -26,6 +26,9 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
         durationInput: durationInput
       }
       dispatch(inputActions.submitUserInputs(formValues));
+      setPrincipalInput("");
+      setInterestInput("");
+      setDurationInput("");
     } else {
       setDisplayFormError(true);
     }

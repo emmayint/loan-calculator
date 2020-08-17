@@ -2,11 +2,6 @@
 const INITIAL_STATE = {
     userInput: "",
     quotes: [
-        {
-            principalInput: 23,
-            interestInput: 42,
-            durationInput: 4
-          }
     ]
 }
 
