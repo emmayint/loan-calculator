@@ -7,7 +7,7 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
   // set up local state with useState hook
   // const [ userInput, setUserInput ] = useState("");
   const [ principalInput, setPrincipalInput] = useState("");
-  const [ interestInput, setInterestInput ] = useState("");
+  const [ interestInput, setInterestInput ] = useState("3.5");
   const [ durationInput, setDurationInput ] = useState("");
   const [ displayFormError, setDisplayFormError ] = useState(false);
   const [ userQuotes, setUserQuotes ] = useState([])
@@ -36,30 +36,28 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
   return (
       <div className="content-container">
           <div className="content">
-          <h4>Quick example using redux to create a centralized source of truth</h4>
-             <p>This component dispatches actions to update the userInput value in the redux store. React-redux's connect method and the mapStateToProps function defined in this component are used to read from the redux store. Input text below and see the "User Input" value update.</p>
-             <div className="form-inputs">
-               <div>
-                 <p>Principal Input: {principalInput}</p>
-                 <p>Principal: <input type="number" className="input-field" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
+          <h1>Loan Calculator</h1>
+             <p>Fill out the field below to calculate monthly loan payments.</p>
+             {displayFormError? (
+               <p className="input-error">Please enter a valid value for all fields</p>
+             ) : (
+               ""
+             )}
+             <div className="form">
+               <div className="form-input">
+                 <label for="principal">Amount</label>
+                 <p><input id="principal" type="number" className="input-field" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
                </div>
-               <div>
-                 <p>Interest Input: {interestInput}</p>
-                 <p>Interest Rate: <input type="number" className="input-field" list="interestRates" placeholder="3.5" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
+               <div className="form-input">
+                 <label for="interest">Interest Rate</label>
+                 <p><input id="interest" type="number" className="input-field" list="interestRates" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
                  <datalist id="interestRates">
-                   <option value="3.0"></option>
-                   <option value="3.25"></option>
                    <option value="3.5"></option>
-                   <option value="3.75"></option>
-                   <option value="4.0"></option>
-                   <option value="4.25"></option>
-                   <option value="4.5"></option>
-                   <option value="4.75"></option>
                  </datalist>
                </div>
-               <div>
-                <p>Principal Input: {principalInput}</p>
-                <p>Duration (in years): <input type="number" className="input-field" list="loanDuration" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
+               <div className="form-input">
+                 <label for="duration">Duration (in years)</label>
+                 <p><input id="duration" type="number" className="input-field" list="loanDuration" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
                  <datalist id="loanDuration">
                    <option value="10"></option>
                    <option value="15"></option>
@@ -68,11 +66,6 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
                  </datalist>
                </div>
               </div>
-              {displayFormError? (
-               <p className="input-error">Please enter a value for all fields</p>
-             ) : (
-               ""
-             )}
              <button className="form-submit" onClick={handleFormSubmit}>
              {/* <button onClick={dispatch(inputActions.submitUserInputs(principalInput, interestInput, durationInput))}> */}
                Submit
