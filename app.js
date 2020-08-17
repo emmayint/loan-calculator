@@ -1,11 +1,19 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const cors = require("cors");
 
-var index = require('./routes/index');
+const index = require('./routes/index');
 
-var app = express();
+const app = express();
+
+const port = 4000;
+app.use(cors());
+app.use((req, res, next) => {
+  console.log(req.originalUrl);
+  next();
+});
 
 // View engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -16,6 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-use('/', index);
+app.use('/', index);
+app.listen(port, () => console.log(`server is listening on port ${port}!`));
+
 
 module.exports = app;
