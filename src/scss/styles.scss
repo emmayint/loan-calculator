@@ -1,0 +1,54 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+body {
+    margin: 0;
+    background-color: #E0F0FF;
+    font-family: proxima-nova, "Helvetica", "Arial", sans-serif;
+}
+
+.content-container {
+    max-width: 900px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    margin: 20px auto;
+    padding: 15px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    // @media (max-width: 920px) {
+    //     flex-direction: column;
+    // }
+
+}
+
+.form-inputs {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.form-submit {
+    max-width: 300px;
+}
+
+.input-error {
+    color: red;
+}
+
+.results-table {
+    width: 100%;
+    text-align: left;
+
+} 

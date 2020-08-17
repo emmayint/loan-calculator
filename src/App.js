@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
 import { connect } from 'react-redux';
 import * as inputActions from './actions/userInputAction';
  
@@ -37,40 +36,71 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
   return (
       <div className="content-container">
           <div className="content">
-              <div className="content-centered content-container">
-                <h4>Quick example using redux to create a centralized source of truth</h4>
-                <p>This component dispatches actions to update the userInput value in the redux store. React-redux's connect method and the mapStateToProps function defined in this component are used to read from the redux store. Input text below and see the "User Input" value update.</p>
-                <p>Input Text: <input className="input-field" onChange={e => dispatch(inputActions.updateUserInput(e.target.value))} value={userInput}/></p>
-                <p>Principal: <input type="number" className="input-field" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
-                <p>Interest Rate: <input className="input-field" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
-                <p>Duration (in years): <input className="input-field" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
-                <p>User Input: {userInput}</p>
+          <h4>Quick example using redux to create a centralized source of truth</h4>
+             <p>This component dispatches actions to update the userInput value in the redux store. React-redux's connect method and the mapStateToProps function defined in this component are used to read from the redux store. Input text below and see the "User Input" value update.</p>
+             <div className="form-inputs">
+               <div>
+                 <p>Principal Input: {principalInput}</p>
+                 <p>Principal: <input type="number" className="input-field" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
+               </div>
+               <div>
+                 <p>Interest Input: {interestInput}</p>
+                 <p>Interest Rate: <input type="number" className="input-field" list="interestRates" placeholder="3.5" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
+                 <datalist id="interestRates">
+                   <option value="3.0"></option>
+                   <option value="3.25"></option>
+                   <option value="3.5"></option>
+                   <option value="3.75"></option>
+                   <option value="4.0"></option>
+                   <option value="4.25"></option>
+                   <option value="4.5"></option>
+                   <option value="4.75"></option>
+                 </datalist>
+               </div>
+               <div>
                 <p>Principal Input: {principalInput}</p>
-                <p>Interest Input: {interestInput}</p>
-                <p>Duration Input: {durationInput}</p>
-                {displayFormError? (
-                  <p>Please enter a value for all fields</p>
-                ) : (
-                  ""
-                )}
-                <button onClick={handleFormSubmit}>
-                {/* <button onClick={dispatch(inputActions.submitUserInputs(principalInput, interestInput, durationInput))}> */}
-                  Submit
-                </button>
+                <p>Duration (in years): <input type="number" className="input-field" list="loanDuration" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
+                 <datalist id="loanDuration">
+                   <option value="10"></option>
+                   <option value="15"></option>
+                   <option value="20"></option>
+                   <option value="30"></option>
+                 </datalist>
+               </div>
               </div>
-              <div className="content-centered content-container form-results">
-                { userQuotes.map((currentQuote) => {
-                  return(
-                    <div>
-                      <p>Principal: {currentQuote.principalInput}</p>
-                      <p>Intertest Rate: {currentQuote.interestInput}</p>
-                      <p>Duration: {currentQuote.durationInput}</p>
-                    </div>
-                  );
-                })
+              {displayFormError? (
+               <p className="input-error">Please enter a value for all fields</p>
+             ) : (
+               ""
+             )}
+             <button className="form-submit" onClick={handleFormSubmit}>
+             {/* <button onClick={dispatch(inputActions.submitUserInputs(principalInput, interestInput, durationInput))}> */}
+               Submit
+             </button>
 
-                }
+             {userQuotes? (
+               <div className="content-centeredform-results">
+                 <table className="results-table">
+                   <tr>
+                     <th>Amount</th>
+                     <th>Interest Rate</th>
+                     <th>Number of Years</th>
+                     <th>Monthly Payment</th>
+                   </tr>
+                   { userQuotes.map((currentQuote) => {
+                     return(
+                       <tr>
+                         <td>{currentQuote.principalInput}</td>
+                         <td>{currentQuote.interestInput}</td>
+                         <td>{currentQuote.durationInput}</td>
+                       </tr>
+                     );
+                   })}
+                 </table>
               </div>
+              ) : (
+                <span></span>
+              )}
           </div>
       </div>
   )
