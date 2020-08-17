@@ -3,6 +3,7 @@ export const updateUserInput = userInput => ({
     userInput //userInput: userInput
 });
 
-export const submitUserInputs = () => ({
-    type: "SUBMIT_USER_INPUTS"
+export const submitUserInputs = (formValues) => ({
+    type: "SUBMIT_USER_INPUTS",
+    formValues
 })
