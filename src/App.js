@@ -93,7 +93,7 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
 
   function handleFormSubmit() {
     setDisplayFormError(false);
-    if(principalInput && interestInput && durationInput ){
+    if(principalInput>0 && interestInput>0 && durationInput>0 ){
       let formValues = {
         principalInput: principalInput,
         interestInput: interestInput,
@@ -121,18 +121,18 @@ const ReduxStateExample = ({dispatch, userInput, quotes}) => {
              <div className="form">
                <div className="form-input">
                  <label for="principal">Amount($)</label>
-                 <p><input id="principal" type="number" className="input-field" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
+                 <p><input id="principal" type="number" className="input-field" min="1" onChange={e => setPrincipalInput(e.target.value)} value={principalInput}/></p>
                </div>
                <div className="form-input">
                  <label for="interest">Interest Rate(%)</label>
-                 <p><input id="interest" type="number" className="input-field" list="interestRates" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
+                 <p><input id="interest" type="number" className="input-field" list="interestRates" min="0" onChange={e => setInterestInput (e.target.value)} value={interestInput}/></p>
                  <datalist id="interestRates">
                    <option value="3.5"></option>
                  </datalist>
                </div>
                <div className="form-input">
                  <label for="duration">Duration (years)</label>
-                 <p><input id="duration" type="number" className="input-field" list="loanDuration" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
+                 <p><input id="duration" type="number" className="input-field" list="loanDuration" min="1" onChange={e => setDurationInput(e.target.value)} value={durationInput}/></p>
                  <datalist id="loanDuration">
                    <option value="10"></option>
                    <option value="15"></option>
